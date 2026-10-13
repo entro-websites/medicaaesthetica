@@ -129,6 +129,8 @@ header .btn{min-height:48px;padding-left:24px;padding-right:24px;font-size:14px}
 .arches path:nth-child(3){animation-delay:.8s;opacity:.1}
 @keyframes draw{to{stroke-dashoffset:0}}
 .cmp{--x:100%;position:relative;z-index:1;aspect-ratio:4/5.2;border-radius:999px 999px var(--r) var(--r);overflow:hidden;background:var(--p-tint);box-shadow:0 40px 80px -24px rgba(34,16,42,.28);touch-action:pan-y;user-select:none;cursor:ew-resize}
+.cmp.single{cursor:default}
+.cmp.single img{transform:scale(1.04);transform-origin:50% 40%}
 .cmp.intro{animation:sweep 2.6s var(--ease) .6s forwards}
 @keyframes sweep{0%{--x:100%}55%{--x:22%}100%{--x:50%}}
 .cmp img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;pointer-events:none}
@@ -527,7 +529,7 @@ footer{background:var(--p-deep);color:var(--on-dark-muted);padding-top:96px;padd
 .f-top ul{list-style:none;margin:0;padding:0;display:grid;gap:12px}
 .f-top a{text-decoration:none}
 .f-top a:hover{color:#fff}
-.f-bot{display:flex;justify-content:space-between;gap:24px;padding-top:32px;flex-wrap:wrap}
+.f-bot{display:flex;justify-content:center;text-align:center;gap:24px;padding-top:32px;flex-wrap:wrap}
 .mbar{display:none}
 
 /* ------------------------------------------------------------------ responsive */
@@ -717,14 +719,8 @@ footer{background:var(--p-deep);color:var(--on-dark-muted);padding-top:96px;padd
         <path d="M10 800V300C10 130 145 10 310 10s300 120 300 290v500"/>
         <path d="M70 800V310C70 170 180 70 310 70s240 100 240 240v490"/>
       </svg>
-      <div class="cmp intro" id="cmp">
-        <img class="before" src="assets/pp/mini-face-pre.webp" alt="Pacijentkinja pre mini face liftinga" width="1000" height="1476">
-        <img class="after" src="assets/pp/mini-face-posle.webp" alt="Ista pacijentkinja posle mini face liftinga" width="1000" height="1476">
-        <span class="tag l">Pre</span><span class="tag r">Posle</span>
-        <span class="bar"></span>
-        <span class="knob"><svg class="ico" viewBox="0 0 24 24"><path d="M9 6l-6 6 6 6M15 6l6 6-6 6"/></svg></span>
-        <label class="sr-only" for="cmpr">Pomeri liniju između fotografije pre i posle</label>
-        <input id="cmpr" type="range" min="0" max="100" value="50">
+      <div class="cmp single">
+        <img src="assets/pp/mini-face-posle.webp" alt="Pacijentkinja Medica Aesthetica posle mini face liftinga" width="1000" height="1476">
       </div>
       <a class="float f1" href="tel:+381112421730">
         <span class="ic"><svg class="ico" viewBox="0 0 24 24"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></svg></span>
@@ -733,7 +729,7 @@ footer{background:var(--p-deep);color:var(--on-dark-muted);padding-top:96px;padd
       <div class="float f2">
         <span><small>Rezultat iz naše ordinacije</small><b>Mini face lifting</b></span>
       </div>
-      <div class="cap"><span><b>Pravi pacijent, prava fotografija.</b></span><span>Povucite liniju levo-desno</span></div>
+      <div class="cap"><span><b>Pravi pacijent, prava fotografija.</b></span></div>
     </div>
   </div>
 </section>
@@ -1206,7 +1202,7 @@ footer{background:var(--p-deep);color:var(--on-dark-muted);padding-top:96px;padd
       <div><h4>Za profesionalce</h4><ul><li><a href="#proizvodi">Proizvodi</a></li><li><a href="#partnerstvo">Brend ambasadori</a></li><li><a href="#edukacije">Antiaging akademija</a></li></ul></div>
       <div><h4>Kontakt</h4><ul><li><a href="tel:+381112421730">011 24 21 730</a></li><li><a href="tel:+381626336590">062 633 659</a></li><li><a href="mailto:info@medicaaesthetica.com">info@medicaaesthetica.com</a></li><li>Grčića Milenka 51, Voždovac</li><li>Dubljanska 23, Vračar</li></ul></div>
     </div>
-    <div class="f-bot"><span>© 2026 Medica Aesthetica d.o.o.</span><a href="#top" class="link">Na vrh stranice</a></div>
+    <div class="f-bot"><span>© 2026 Medica Aesthetica d.o.o.</span></div>
   </div>
 </footer>
 
@@ -1329,18 +1325,6 @@ $$('#drawer a').forEach(a => a.addEventListener('click', () => { document.body.c
 /* ---------------------------------------------------------------- marquee: duplicate track */
 const tr = $('#track'); tr.innerHTML += tr.innerHTML;
 
-/* ---------------------------------------------------------------- hero compare */
-(() => {
-  const cmp = $('#cmp'), rng = $('#cmpr');
-  const set = v => { cmp.classList.remove('intro'); cmp.style.setProperty('--x', v + '%'); rng.value = v; };
-  cmp.addEventListener('animationend', () => { cmp.classList.remove('intro'); cmp.style.setProperty('--x', '50%'); });
-  rng.addEventListener('input', () => set(+rng.value));
-  let drag = false;
-  const move = e => { const r = cmp.getBoundingClientRect(); set(Math.max(0, Math.min(100, (e.clientX - r.left) / r.width * 100))); };
-  cmp.addEventListener('pointerdown', e => { drag = true; move(e); });
-  addEventListener('pointermove', e => { if (drag) move(e); });
-  addEventListener('pointerup', () => drag = false);
-})();
 
 /* ---------------------------------------------------------------- concerns */
 (() => {
